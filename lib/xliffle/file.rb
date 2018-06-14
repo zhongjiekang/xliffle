@@ -1,6 +1,6 @@
 module Xliffle
   class File
-    attr_reader :original, :strings, :source_locale, :target_locale
+    attr_reader :original, :strings, :source_locale, :target_locale, :datetime
 
     def initialize(original, source_locale, target_locale)
       @strings = []
@@ -16,7 +16,7 @@ module Xliffle
     end
 
     def to_xliff(xliff)
-      xliff.file(original: @original, datatype: 'plaintext', 'source-language' => @source_locale, 'target-language' => @target_locale,) do |file|
+      xliff.file(original: @original, datatype: 'plaintext', 'source-language' => @source_locale, 'target-language' => @target_locale, 'date' => Time.now) do |file|
         file.body do |body|
           self.strings.each do |string|
             string.to_xliff(body)
